@@ -23,27 +23,30 @@
 
 <body>
 
-<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2023</h1>
-<h1 align="middle">Project 1: Rasterizer</h1>
-<h2 align="middle">YOUR NAME, CS184-??</h2>
+    <h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2023</h1>
+    <h1 align="middle">Project 1: Rasterizer</h1>
+    <h2 align="middle">AKHIL VEMURI</h2>
+    <h2 align="middle">MEIQI SUN</h2>
+    <h3 align="middle">All Projects: <a href="https://akhilvemuri.github.io/cs184-proj-webpage/">https://akhilvemuri.github.io/cs184-proj-webpage/</a></h3>
 
-<br><br>
+    <br><br>
 
     <div>
 
         <h2 align="middle">Overview</h2>
-        <p>Give a high-level overview of what you implemented in this project. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the project.</p>
         <p>
             Through assignment 1, we built a simple rasterizer that enables us to draw triangles (via normal/super sampling), perform transformations (under harmonious coordinate systems), apply barycentric coordinates, and allow texture mapping using different sampling techniques and mipmap levels. As a result, our project can take in an SVG file, and render the corresponding images on our GUI screen.
         </p>
         <p>
             The project was very interesting to implement, because during lectures, we learnt the theory and foundations behind computer graphics. They are relatively abstract to me. However, when we actually had the chance to write code for supersampling, and seeing how jaggies went away for the images we rendered, we were truly amazed by the power of the technique. Moreover, “texture mapping” sounds like an extremely complicated task where you have to transform the coordinates, find and interpolate the appropriate mipmap levels, and use nearest pixel/linear interpolation to generate the target pixel. When I see a “flat” texture and an unsmooth surface, I have no idea how to calculate the mapping formula. Yet, after carefully reviewing the slides and performing the implementation, I gradually understood the steps involved and the calculations associated.
         </p>
+
+        <br />
         <h2 align="middle">Section I: Rasterization</h2>
 
         <h3 align="middle">Part 1: Rasterizing single-color triangles</h3>
         <p>
-            I rasterize the triangle by:
+            We rasterize the triangle by:
         </p>
         <ol style="list-style-type: decimal;">
             <li>Finding the rectangle box that perfects bounds the triangle</li>
@@ -88,11 +91,11 @@
                 Start from the corner of the pixel, and gradually increment/move with step size: 1/increment on both the x and y axes
             </li>
             <li>
-                For each of the finer samples we collect, we mark on the sample_buffer (I chose to use an 1-D list) if the point is within the triangle
+                For each of the finer samples we collect, we mark on the sample_buffer (We chose to use an <b>1-D array</b> ) if the point is within the triangle
             </li>
             <ol style="list-style-type: none;">
                 <li>
-                    [Setup of sample_buffer: we need to resize it to width*height*sample_rate, so that we have enough space in the 1-D array to store all the samples we collected]
+                    [Setup of sample_buffer: we need to resize it to width*height*sample_rate, so that we have enough space in the <b>1-D array</b> to store all the samples we collected]
                 </li>
 
             </ol>
@@ -143,7 +146,7 @@
         </h4>
 
 
-        We saw significant anti-aliasing effects with super sampling, because we are allowed to color the pixels to have different intensities according to the portion of the pixel that lies inside the triangle. Therefore, we enabled smoother transitions between the pixels, and the graph gets antialiased.
+        We saw significant anti-aliasing effects with super sampling, because we are allowed to color the pixels with different intensities according to the portion of the pixel that lies inside the triangle. Therefore, we enabled smoother transitions between the pixels, and the graph gets antialiased.
         <div align="middle">
             <table style="width=100%">
                 <tr>
@@ -188,7 +191,7 @@
 
 
         <h3 align="middle">Part 3: Transforms</h3>
-        Cubeman is running while pointing forward! This requires him to have his right leg tilting forward, and back lag curled up because he is running. His left arm is also bent, because he is running forward to the right. His right arm stays straight, because while running, he is simultaneously pointing forward.
+        Cubeman is running while pointing forward! This requires him to have his right leg tilted forward, and back lag curled up because he is running. His left arm is also bent, because he is running forward to the right. His right arm stays straight, because while running, he is simultaneously pointing forward.
         <div align="middle">
             <table style="width=100%">
 
@@ -200,7 +203,7 @@
             </table>
         </div>
 
-
+        <br />
         <h2 align="middle">Section II: Sampling</h2>
 
         <h3 align="middle">Part 4: Barycentric coordinates</h3>
@@ -234,22 +237,22 @@
         <h4>
             Observations:
         </h4>
-        As you can see in Figures 9-12 below, bilinear sampling hides the aliasing evident in the nearest neighbor sampling images. Supersampling improves the quality of both sampling methods. In theory, the largest differences between the two methods should be most prominent when the screen space is magnified relative to the texture space (i.e. small L metric) at the sample point. Then the nearest-neighbor approach will effectively magnify the pixelation in texel space into screen space since 1 texel maps to multiple pixels under a magnification regime.
+        As you can see in Figures 9-12 below, bilinear sampling hides the aliasing evident in the nearest neighbor sampling images. Supersampling improves the quality of both sampling methods. Also, the antialiasing effect of bilinear interpolation is much more obvious when sampling rate is 1; whereas when sampling rate = 16, the difference between nearest neighbor and bilinear interpolation is not very obvious anymore. In theory, the largest differences between the two methods should be most prominent when the screen space is magnified relative to the texture space (i.e. small L metric) at the sample point. Then the nearest-neighbor approach will effectively magnify the pixelation in texel space into screen space since 1 texel maps to multiple pixels under a magnification regime. Also, when we the sample rate is 1, nearest neighbor is reaching out to the nearest pixel under the original resolution for color. However, when supersampling is already performed, the nearest neighbor method reaches out to a nearest sample point within the pixel (under original resolution), so the effect of bilinear interpolation under this case would be less obvious.
         <div align="middle">
             <table style="width=100%">
                 <tr>
                     <td>
                         <figure>
-                            <img src="images/task_5_nearest_1.png" align="middle" width="400px" />
+                            <img src="images/Task_5_near_1_n.png" align="middle" width="400px" />
                             <figcaption align="middle"> Fig 9: Nearest Neighbor (sample rate = 1).</figcaption>
                         </figure>
                     </td>
                     <td>
                         <figure>
-                            <img src="images/task_5_bilinear_1.png" align="middle" width="400px" />
+                            <img src="images/Task_5_bilinear_1_n.png" align="middle" width="400px" />
                             <figcaption align="middle"> Fig 10: Bilinear (sample rate = 1).</figcaption>
                         </figure>
-                        
+
                     </td>
                 </tr>
 
@@ -257,13 +260,13 @@
                 <tr>
                     <td>
                         <figure>
-                            <img src="images/task_5_nearest_16.png" align="middle" width="400px" />
+                            <img src="images/Task_5_near_16_n.png" align="middle" width="400px" />
                             <figcaption align="middle"> Fig 11: Nearest Neighbor (sample rate = 16).</figcaption>
                         </figure>
                     </td>
                     <td>
                         <figure>
-                            <img src="images/task_5_bilinear_16.png" align="middle" width="400px" />
+                            <img src="images/Task_5_bilinear_16_n.png" align="middle" width="400px" />
                             <figcaption align="middle"> Fig 12: Bilinear (sample rate = 16).</figcaption>
                         </figure>
                     </td>
@@ -280,7 +283,7 @@
             Background:
         </h4>
         Level sampling refers to the process of selecting the level of detail to use throughout a texture during texture mapping and minification. This is important because different parts of a 3D model may be viewed at different distances, requiring different levels of detail in the textures used for mapping.
-        Mipmaps formulate a collection of downsampled (texel-averaged) textures from which sensible texel values can be passed back to screen space pixels. The process for identifying the proper mipmap level to retrieve texel values from for a given pixel in screen space is called level sampling. Fundamentally, I implemented level sampling by using the columns of the map's Jacobian matrix. The magnitude of the column vectors of the Jacobian provide an approximate measure of the local pixel footprint in texture space.
+        Mipmaps formulate a collection of downsampled (texel-averaged) textures from which sensible texel values can be passed back to screen space pixels. The process for identifying the proper mipmap level to retrieve texel values from for a given pixel in screen space is called level sampling. Fundamentally, we implemented level sampling by using the columns of the map's Jacobian matrix. The magnitude of the column vectors of the Jacobian provide an approximate measure of the local pixel footprint in texture space.
         From this information, we are able to calculate which mipmap level is best suited to color a certain part of screen space based on the degree of minification induced by the map at that local region.
 
         <h4>
@@ -336,7 +339,7 @@
                             <img src="images/task_6_zero_bilinear.png" align="middle" width="400px" />
                             <figcaption align="middle"> Fig 14: L_ZERO, P_LINEAR.</figcaption>
                         </figure>
-                        
+
                     </td>
                 </tr>
 
@@ -362,10 +365,33 @@
         <br />
 
         <h2 align="middle">Section III: Art Competition</h2>
-        <p>If you are not participating in the optional art competition, don't worry about this section!</p>
+        <h3 align="middle">Part 7: Draw something interesting!</h3>        
+        For our art submssion, we drew a low-poly, triangulated image of a bird sitting on a tree. While the original image was sourced from Google, we used a script to modify it.
+        
+        <br \>
+        <br \>
+        
+        First, we identified sample points along defining edges of the picture using Canny edge detection. This method involves smoothing the image using a Gaussian filter, computing the gradient across the image matrix, and determining strong and weak edges by applying a threshold.
+        Next, we applied the Delaunay triangulation algorithm to connect these sample points, forming a multilayered triangle mesh that gives the artwork its characteristic low-poly, triangular appearance.
+        Finally, we had to add the colors to our picture. Each triangle's color was determined by the triangle's "average" color in the original image. This allowed us to map each triangle to a single fill, which would keep the drawing smooth and help enhance the overall 3Dness of the picture.
+        To create the actual svg file, we simply wrote a template for a general polygon tag and replicated that for each triangle, filling in the sample points and fill color as necessary.
 
-        <h3 align="middle">Part 7: Draw something interesting!</h3>
 
-        </ol>
-    </div></body>
+        <br />
+        <br />
+
+        There are many ways in which this drawing can be improved upon. The parameters of threshold, blur, and sampling rate could all affect which sample points are chosen and how fine-grained each triangle would look. Having more triangles would approximate the original image closer, but having less could help reduce complexity in the image, therefore reducing the amount of high frequency signals.
+        The size and shape of each triangle is another factor. This can heavily affect what the color scheme will look like as well as whether the image is comprehensible. As a future improvement, we would want to incorporate multiple gradient colors or different types of polygons to allow for more flexibility across the drawing in general.
+        
+        <div align="middle">
+            <table style="width=100%">
+                <tr>
+                    <td>
+                        <img src="triangulated_bird.png" align="middle" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
 </html>
