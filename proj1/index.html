@@ -27,9 +27,8 @@
     <h1 align="middle">Project 1: Rasterizer</h1>
     <h2 align="middle">AKHIL VEMURI</h2>
     <h2 align="middle">MEIQI SUN</h2>
-    <h3 align="middle">All Projects: <a href="https://akhilvemuri.github.io/cs184-proj-webpage/">https://akhilvemuri.github.io/cs184-proj-webpage/</a></h3>
 
-    <br><br>
+    <br /><br />
 
     <div>
 
@@ -365,12 +364,12 @@
         <br />
 
         <h2 align="middle">Section III: Art Competition</h2>
-        <h3 align="middle">Part 7: Draw something interesting!</h3>        
+        <h3 align="middle">Part 7: Draw something interesting!</h3>
         For our art submssion, we drew a low-poly, triangulated image of a bird sitting on a tree. While the original image was sourced from Google, we used a script to modify it.
-        
-        <br \>
-        <br \>
-        
+
+        <br \=\ />
+        <br \=\ />
+
         First, we identified sample points along defining edges of the picture using Canny edge detection. This method involves smoothing the image using a Gaussian filter, computing the gradient across the image matrix, and determining strong and weak edges by applying a threshold.
         Next, we applied the Delaunay triangulation algorithm to connect these sample points, forming a multilayered triangle mesh that gives the artwork its characteristic low-poly, triangular appearance.
         Finally, we had to add the colors to our picture. Each triangle's color was determined by the triangle's "average" color in the original image. This allowed us to map each triangle to a single fill, which would keep the drawing smooth and help enhance the overall 3Dness of the picture.
@@ -382,16 +381,20 @@
 
         There are many ways in which this drawing can be improved upon. The parameters of threshold, blur, and sampling rate could all affect which sample points are chosen and how fine-grained each triangle would look. Having more triangles would approximate the original image closer, but having less could help reduce complexity in the image, therefore reducing the amount of high frequency signals.
         The size and shape of each triangle is another factor. This can heavily affect what the color scheme will look like as well as whether the image is comprehensible. As a future improvement, we would want to incorporate multiple gradient colors or different types of polygons to allow for more flexibility across the drawing in general.
-        
+
         <div align="middle">
             <table style="width=100%">
                 <tr>
                     <td>
-                        <img src="triangulated_bird.png" align="middle" />
+                        <img src="competition.png" align="middle" />
                     </td>
                 </tr>
             </table>
         </div>
     </div>
+
+    <h3 align="middle"> All Projects: <a href="https://akhilvemuri.github.io/cs184-proj-webpage/">https://akhilvemuri.github.io/cs184-proj-webpage/</a></h3>
+
 </body>
 </html>
+
