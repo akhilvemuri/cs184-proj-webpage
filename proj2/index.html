@@ -44,310 +44,323 @@
     <h2 align="middle">AKHIL VEMURI</h2>
     <h2 align="middle">MEIQI SUN</h2>
 
-    <br /><br />
+    <!-- Add Website URL -->
+    <h2 align="middle">Website URL: <a href="https://akhilvemuri.github.io/cs184-proj-webpage/">https://akhilvemuri.github.io/cs184-proj-webpage/</a></h2>
 
-          <div>
+    <br />
 
-              <h2 align="middle">Overview</h2>
-              <p>
-                  In this project, we built the Bezier curves, and from there we extend to build Bezier surfaces using the de Casteljau algorithm. Then, we worked with the teapot. We manipulated triangle meshes, to enable Phong shadowing, edge flips, edge splits, and loop subdivision for mesh upsampling. These different functions allowed us to render a more elaborate, real-looking teapot.
-              </p>
-              <br />
+    <div align="center">
+        <table style="width=100%">
+            <tr>
+                <td align="middle">
+                    <img src="example_image.png" width="650px" />
+                </td>
+            </tr>
+        </table>
+    </div>
 
+    <div>
 
-              <h2 align="middle">Section I: Bezier Curves and Surfaces</h2>
-
-              <h3 align="middle">Part 1: Bezier Curves with 1D de Casteljau Subdivision</h3>
-              <p>
-                  The De Casteljau algorithm is a technique used to calculate the location of a point on a bezier curve.
-                  The curve is defined by a parameter t, which can take values between 0 and 1. By starting with a list of n control points, we determined the positions on the bezier curve by repeatedly performing linear interpolations between the points.
-                  At each step, we evaluated each line segment (connecting updated, consecutive points) at a fractional distance t along its "edge" length. This process can be defined mathematically as a recursive step where the new set of coordinate points is of length n-1.
-                  <br />
-                  <br />
-                  The image sequence below demonstrates the De Casteljau algorithm applied to a list of six points as it progresses towards a single point on the Bezier curve for a specific value of t.
-                  The green line represents the true Bezier curve and serves as a reference. The blue line segments denotes the linear interpolations performed at each step from subdivision levels 1-5.
-              </p>
-              <br />
-
-              <div align="middle">
-                  <table style="width=100%">
-                      <tr align="center">
-                          <td>
-                              <img src="images/Q1_control.png" align="middle" width="550px" height="350px" />
-                              <figcaption>Fig 1: Bezier Curve with 6 control points.</figcaption>
-                          </td>
-                          <td>
-                              <img src="images/Q1_level0.png" align="middle" width="550px" height="350px" />
-                              <figcaption>Fig 2: De Casteljau Level 1 Subdivision.</figcaption>
-                          </td>
-                      </tr>
-                      <tr align="center">
-                          <td>
-                              <img src="images/Q1_level1.png" align="middle" width="550px" height="350px" />
-                              <figcaption>Fig 3: De Casteljau Level 2 Subdivision.</figcaption>
-                          </td>
-                          <td>
-                              <img src="images/Q1_level2.png" align="middle" width="550px" height="350px" />
-                              <figcaption>Fig 4:  De Casteljau Level 3 Subdivision.</figcaption>
-                          </td>
-                      </tr>
-                      <tr align="center">
-                          <td>
-                              <img src="images/Q1_level3.png" align="middle" width="550px" height="350px" />
-                              <figcaption>Fig 5:  De Casteljau Level 4 Subdivision.</figcaption>
-                          </td>
-                          <td>
-                              <img src="images/Q1_level4.png" align="middle" width="550px" height="350px" />
-                              <figcaption>Fig 6:  De Casteljau Level 5 Subdivision.</figcaption>
-                          </td>
-                      </tr>
-                  </table>
-              </div>
-              <div align="middle">
-                  <img src="images/Q1_modified.png" align="middle" width="550px" height="350px" />
-                  <figcaption>Fig 7: Perturbed Bezier Curve with new t value.</figcaption>
-              </div>
-              <br />
+        <h2 align="middle">Overview</h2>
+        <p>
+            In this project, we built the Bezier curves, and from there we extend to build Bezier surfaces using the de Casteljau algorithm. Then, we worked with the teapot. We manipulated triangle meshes, to enable Phong shadowing, edge flips, edge splits, and loop subdivision for mesh upsampling. These different functions allowed us to render a more elaborate, real-looking teapot.
+        </p>
+        <br />
 
 
-              <h3 align="middle">Part 2: Bezier Surfaces with Separable 1D de Casteljau</h3>
-              <p>
-                  The 1D De Casteljau Algorithm can be extended naturally to 2D Bezier surfaces. To do so, we need to define the surface using a collection of 1D Bezier curves.
-                  We begin with m Bezier curves in 3D space, each defined by n control points and parameterized by a scalar u. Using these curves, we can define a Bezier surface as the set of points obtained by "sliding" a Bezier curve g_u(v) parametrized by v through the control points for a fixed value of u.
-                  By varying u, we obtain a function of two coordinates: g(u,v). To evaluate a point g(u,v) on such a surface using the De Casteljau algorithm, we use a function that takes in an m x n 2D vector of control points and the parametric coordinates (u,v). We first apply the 1D De Casteljau algorithm described in Part 1 along the rows of the 2D vector, resulting in m Bezier curves evaluated at u.
-                  We then use these m points to evaluate the "sliding" Bezier curve at v using the 1-D De Casteljau algorithm again. The image below demonstrates how complex geometries (such as hard edges, beveled surfaces, and discontinuities) can be created with a patchwork of Bezier surfaces.
-              </p>
-              <br />
+        <h2 align="middle">Section I: Bezier Curves and Surfaces</h2>
 
-              <div align="middle">
-                  <img src="images/Q2_teapot.png" align="middle" width="80%" />
-                  <figcaption>Fig 8: Teapot detailed with Bezier Surfaces.</figcaption>
-              </div>
-              <br />
+        <h3 align="middle">Part 1: Bezier Curves with 1D de Casteljau Subdivision</h3>
+        <p>
+            The De Casteljau algorithm is a technique used to calculate the location of a point on a bezier curve.
+            The curve is defined by a parameter t, which can take values between 0 and 1. By starting with a list of n control points, we determined the positions on the bezier curve by repeatedly performing linear interpolations between the points.
+            At each step, we evaluated each line segment (connecting updated, consecutive points) at a fractional distance t along its "edge" length. This process can be defined mathematically as a recursive step where the new set of coordinate points is of length n-1.
+            <br />
+            <br />
+            The image sequence below demonstrates the De Casteljau algorithm applied to a list of six points as it progresses towards a single point on the Bezier curve for a specific value of t.
+            The green line represents the true Bezier curve and serves as a reference. The blue line segments denotes the linear interpolations performed at each step from subdivision levels 1-5.
+        </p>
+        <br />
 
-
-              <h2 align="middle">Section II: Triangle Meshes and Half-Edge Data Structure</h2>
-
-              <h3 align="middle">Part 3: Area-Weighted Vertex Normals</h3>
-
-              <b>
-                  We implemented the area-weight vertex normals by following these steps:
-              </b>
-              <p>
-                  <ol style="list-style-type: disc;">
-                      <li>
-                          Find an outgoing half-edge of the vertex, and create an empty ArrayList to store the vertices' information we need to compute the normal. Push the current vertex to the ArrayList. Also initialize an
-                          vector initialized to all zeros to store the accumulated normals.
-                      </li>
-                      <li>
-                          Starting from this half-edge, iterate over all the faces adjacent to the vertex. The specific way we implemented this: we sequentially iterate over all the twins of the half-edge starting at vertex,
-                          using the next of h_twin to get to the next half edge to work with. This allows us to ensure that we are essentially iterating over all the triangle faces. For each iteration, we store the vertex position
-                          of h_twin to our arraylist, and whenever we get to three vertices in the array, we compute the normal vector of the face by taking the cross product of the two sides if the triangle joint by the target
-                          vertex. We then add the computed normal vector to normals. After that, we remove the second vertex from the ArrayList (the first vertex is target vertex so keep, the last vertex was just added inside, and
-                          would be composing part of the next face).
-                      </li>
-
-                      <li>
-                          Eventually, we normalize the accumulated normals: divide it by its norm. This would work because when we add the normals, we directly added the cross products of the two sides of the triangle, whose
-                          norm is proportional to the area of the face. (-> This helps to ensure that the weights are proportional to the area of the face)
-                      </li>
-
-                  </ol>
-              </p>
-              <br />
-
-
-
-              <div align="middle">
-                  <table style="width=100%">
-                      <tr>
-                          <td>
-                              <img src="images/Q3_default_shading.png" align="middle" width="400px" />
-                              <figcaption align="middle"> Fig 9: Default Shading.</figcaption>
-                          </td>
-                          <td>
-                              <img src="images/Q3_Phong_shading.png" align="middle" width="400px" />
-                              <figcaption align="middle"> Fig 10: Phong Shading.</figcaption>
-                          </td>
-                      </tr>
-
-                  </table>
-              </div>
-              <br />
+        <div align="middle">
+            <table style="width=100%">
+                <tr align="center">
+                    <td>
+                        <img src="images/Q1_control.png" align="middle" width="550px" height="350px" />
+                        <figcaption>Fig 1: Bezier Curve with 6 control points.</figcaption>
+                    </td>
+                    <td>
+                        <img src="images/Q1_level0.png" align="middle" width="550px" height="350px" />
+                        <figcaption>Fig 2: De Casteljau Level 1 Subdivision.</figcaption>
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td>
+                        <img src="images/Q1_level1.png" align="middle" width="550px" height="350px" />
+                        <figcaption>Fig 3: De Casteljau Level 2 Subdivision.</figcaption>
+                    </td>
+                    <td>
+                        <img src="images/Q1_level2.png" align="middle" width="550px" height="350px" />
+                        <figcaption>Fig 4:  De Casteljau Level 3 Subdivision.</figcaption>
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td>
+                        <img src="images/Q1_level3.png" align="middle" width="550px" height="350px" />
+                        <figcaption>Fig 5:  De Casteljau Level 4 Subdivision.</figcaption>
+                    </td>
+                    <td>
+                        <img src="images/Q1_level4.png" align="middle" width="550px" height="350px" />
+                        <figcaption>Fig 6:  De Casteljau Level 5 Subdivision.</figcaption>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div align="middle">
+            <img src="images/Q1_modified.png" align="middle" width="550px" height="350px" />
+            <figcaption>Fig 7: Perturbed Bezier Curve with new t value.</figcaption>
+        </div>
+        <br />
 
 
-              <h3 align="middle">Part 4: Edge Flip</h3>
-              <b>
-                  The way we implemented the edge flip:
-              </b>
-              <p>
-                  <ol style="list-style-type: disc;">
-                      <li>
-                          First, we checked to see if either of the neighboring faces of the edge is on a boundary loop, if so, immediately return the function.
-                      </li>
-                      <li>
-                          Second, we drew a graph on paper labeling all the edges, half edges, vertices, and faces before and after the edge flip. Then, relying on the graph before the edge flip, we wrote the code to identify (name) all the half edges (using e0, next and twin), vertices, edges, and faces (all of these relying on pointers from the half edges) involved.
-                      </li>
+        <h3 align="middle">Part 2: Bezier Surfaces with Separable 1D de Casteljau</h3>
+        <p>
+            The 1D De Casteljau Algorithm can be extended naturally to 2D Bezier surfaces. To do so, we need to define the surface using a collection of 1D Bezier curves.
+            We begin with m Bezier curves in 3D space, each defined by n control points and parameterized by a scalar u. Using these curves, we can define a Bezier surface as the set of points obtained by "sliding" a Bezier curve g_u(v) parametrized by v through the control points for a fixed value of u.
+            By varying u, we obtain a function of two coordinates: g(u,v). To evaluate a point g(u,v) on such a surface using the De Casteljau algorithm, we use a function that takes in an m x n 2D vector of control points and the parametric coordinates (u,v). We first apply the 1D De Casteljau algorithm described in Part 1 along the rows of the 2D vector, resulting in m Bezier curves evaluated at u.
+            We then use these m points to evaluate the "sliding" Bezier curve at v using the 1-D De Casteljau algorithm again. The image below demonstrates how complex geometries (such as hard edges, beveled surfaces, and discontinuities) can be created with a patchwork of Bezier surfaces.
+        </p>
+        <br />
 
-                      <li>
-                          Third, we reassigned each of the elements involved in the flip. For each vertex, face, and edge, we reassigned its half edge pointer so as to correspond to the new graph after the edge flip. Eventually, we set the next, twin, vertex, edge, and face of each half edge’s pointer to the corresponding elements.
-                      </li>
-                      <li>
-                          Lastly, we rendered the teapot and tested the flip operation on multiple different edges to make sure that our method works properly as expected.
-                      </li>
-                      <li>
-                          The debugging trick we used was to match each line of code with the graph we drew on the paper, and make sure that the correspondence indeed holds (checked to make sure there's no typos). We didn’t have any special implementations. We just followed the suggestions from the project spec.
-                      </li>
-
-                  </ol>
-              </p>
+        <div align="middle">
+            <img src="images/Q2_teapot.png" align="middle" width="80%" />
+            <figcaption>Fig 8: Teapot detailed with Bezier Surfaces.</figcaption>
+        </div>
+        <br />
 
 
-              <div align="middle">
-                  <table style="width=100%">
-                      <tr>
-                          <td>
-                              <figure>
-                                  <img src="images/Q4_1_before_flip.png" align="middle" width="400px" />
-                                  <figcaption align="middle"> Fig 11: Before Flip.</figcaption>
-                              </figure>
-                          </td>
-                          <td>
-                              <figure>
-                                  <img src="images/Q4_1_after_flip.png" align="middle" width="400px" />
-                                  <figcaption align="middle"> Fig 12: After Flip.</figcaption>
-                              </figure>
+        <h2 align="middle">Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
-                          </td>
-                      </tr>
+        <h3 align="middle">Part 3: Area-Weighted Vertex Normals</h3>
 
-                  </table>
-              </div>
-              <br />
+        <b>
+            We implemented the area-weight vertex normals by following these steps:
+        </b>
+        <p>
+            <ol style="list-style-type: disc;">
+                <li>
+                    Find an outgoing half-edge of the vertex, and create an empty ArrayList to store the vertices' information we need to compute the normal. Push the current vertex to the ArrayList. Also initialize an
+                    vector initialized to all zeros to store the accumulated normals.
+                </li>
+                <li>
+                    Starting from this half-edge, iterate over all the faces adjacent to the vertex. The specific way we implemented this: we sequentially iterate over all the twins of the half-edge starting at vertex,
+                    using the next of h_twin to get to the next half edge to work with. This allows us to ensure that we are essentially iterating over all the triangle faces. For each iteration, we store the vertex position
+                    of h_twin to our arraylist, and whenever we get to three vertices in the array, we compute the normal vector of the face by taking the cross product of the two sides if the triangle joint by the target
+                    vertex. We then add the computed normal vector to normals. After that, we remove the second vertex from the ArrayList (the first vertex is target vertex so keep, the last vertex was just added inside, and
+                    would be composing part of the next face).
+                </li>
 
+                <li>
+                    Eventually, we normalize the accumulated normals: divide it by its norm. This would work because when we add the normals, we directly added the cross products of the two sides of the triangle, whose
+                    norm is proportional to the area of the face. (-> This helps to ensure that the weights are proportional to the area of the face)
+                </li>
 
-              <b>
-                  Debugging journey:
-              </b>
-              <p>
-                  <ol style="list-style-type: disc;">
-                      <li>
-                          At first, we considered only the pointers on the flipped edge, and not the other 4 edges. Thus, our teapot had some “holes” after the edge flip. We later realized that we should consider all the involved edges instead of only the given “flipping edge”.
-                      </li>
-                      <li>
-                          Also, initially, we tried to think in our head what changed and what didn’t. And tried to identify/reassign only the elements which “we think” should be modified. However, later, we found that to be very inefficient, and later when we instead took all involved elements into consideration (identify and reassign all of the elements), we soon found this to be a much better way of solving this problem.
-                      </li>
-                  </ol>
-
-              </p>
-              <br />
+            </ol>
+        </p>
+        <br />
 
 
-              <h3 align="middle">Part 5: Edge Split</h3>
-              <b>
-                  The way we implemented the edge split:
-              </b>
-              <p>
-                  Our implementation process for part 5 is somewhat similar to that of part 4:
 
-                  <ol style="list-style-type: disc;">
-                      <li>
-                          First, we labeled the graphs on paper to make sure we understand what needs to be added/modified.
-                      </li>
-                      <li>
-                          Second, we identified all the half edges, vertices, edges, and faces involved in the original graph.
-                      </li>
-                      <li>
-                          Third, we created the new elements involved in the split operation: one vertex m (also initializes the position of the vertex to be the midpoint of b, c, vertex of the target split edge), 2 new faces, 3 new edges, and 6 new half edges.
-                      </li>
-                      <li>
-                          Fourth, we reassigned all the halfedge pointers of vertices, faces, and edges. And we also reassigned all of the next, twin, vertex, edge, and face pointer of the half edges.
-                      </li>
-                      <li>
-                          Lastly, we rendered the teapot and tested the split operation on multiple different edges to make sure that our method works properly as expected.
-                      </li>
-                      <li>
-                          Building on previous experiences, the process turned out to be quite smooth. We didn’t rely on any special implementation/debugging tricks other than keeping the elements in order, and write clear documentations to make sure that the code is easy to read and understand.
-                      </li>
-                  </ol>
-              </p>
-              <b>
-                  Screenshot of a mesh before and after edge splits:
-              </b>
+        <div align="middle">
+            <table style="width=100%">
+                <tr>
+                    <td>
+                        <img src="images/Q3_default_shading.png" align="middle" width="400px" />
+                        <figcaption align="middle"> Fig 9: Default Shading.</figcaption>
+                    </td>
+                    <td>
+                        <img src="images/Q3_Phong_shading.png" align="middle" width="400px" />
+                        <figcaption align="middle"> Fig 10: Phong Shading.</figcaption>
+                    </td>
+                </tr>
 
-              <div align="middle">
-                  <table style="width=100%">
-                      <tr>
-                          <td>
-                              <figure>
-                                  <img src="images/Q5_before_split.png" align="middle" width="400px" />
-                                  <figcaption align="middle"> Fig 13: Before Split.</figcaption>
-                              </figure>
-                          </td>
-                          <td>
-                              <figure>
-                                  <img src="images/Q5_after_split.png" align="middle" width="400px" />
-                                  <figcaption align="middle"> Fig 14: After Split.</figcaption>
-                              </figure>
-
-                          </td>
-                      </tr>
+            </table>
+        </div>
+        <br />
 
 
-                  </table>
-              </div>
-              <b>
-                  Screenshot of a mesh before and after a mixture of edge flips and splits:
-              </b>
+        <h3 align="middle">Part 4: Edge Flip</h3>
+        <b>
+            The way we implemented the edge flip:
+        </b>
+        <p>
+            <ol style="list-style-type: disc;">
+                <li>
+                    First, we checked to see if either of the neighboring faces of the edge is on a boundary loop, if so, immediately return the function.
+                </li>
+                <li>
+                    Second, we drew a graph on paper labeling all the edges, half edges, vertices, and faces before and after the edge flip. Then, relying on the graph before the edge flip, we wrote the code to identify (name) all the half edges (using e0, next and twin), vertices, edges, and faces (all of these relying on pointers from the half edges) involved.
+                </li>
 
-              <div align="middle">
-                  <table style="width=100%">
-                      <tr>
-                          <td>
-                              <figure>
-                                  <img src="images/Q5_before_sf.png" align="middle" width="400px" />
-                                  <figcaption align="middle"> Fig 15: Before Split & Flip.</figcaption>
-                              </figure>
-                          </td>
-                          <td>
-                              <figure>
-                                  <img src="images/Q5_after_sf.png" align="middle" width="400px" />
-                                  <figcaption align="middle"> Fig 16: After Split & Flip.</figcaption>
-                              </figure>
+                <li>
+                    Third, we reassigned each of the elements involved in the flip. For each vertex, face, and edge, we reassigned its half edge pointer so as to correspond to the new graph after the edge flip. Eventually, we set the next, twin, vertex, edge, and face of each half edge’s pointer to the corresponding elements.
+                </li>
+                <li>
+                    Lastly, we rendered the teapot and tested the flip operation on multiple different edges to make sure that our method works properly as expected.
+                </li>
+                <li>
+                    The debugging trick we used was to match each line of code with the graph we drew on the paper, and make sure that the correspondence indeed holds (checked to make sure there's no typos). We didn’t have any special implementations. We just followed the suggestions from the project spec.
+                </li>
 
-                          </td>
-                      </tr>
-
-
-                  </table>
-              </div>
-
-              <b>
-                  Screenshot of EC - Split of a boundary edge:
-              </b>
-
-              <div align="middle">
-                  <table style="width=100%">
-                      <tr>
-                          <td>
-                              <figure>
-                                  <img src="images/Q5_EC_Before_Split.png" align="middle" width="400px" />
-                                  <figcaption align="middle"> Fig 17: Boundary Edge Before Split (EC).</figcaption>
-                              </figure>
-                          </td>
-                          <td>
-                              <figure>
-                                  <img src="images/Q5_EC_After_Split.png" align="middle" width="400px" />
-                                  <figcaption align="middle"> Fig 18: Boundary Edge After Split (EC).</figcaption>
-                              </figure>
-
-                          </td>
-                      </tr>
+            </ol>
+        </p>
 
 
-                  </table>
-              </div>
-              <br />
+        <div align="middle">
+            <table style="width=100%">
+                <tr>
+                    <td>
+                        <figure>
+                            <img src="images/Q4_1_before_flip.png" align="middle" width="400px" />
+                            <figcaption align="middle"> Fig 11: Before Flip.</figcaption>
+                        </figure>
+                    </td>
+                    <td>
+                        <figure>
+                            <img src="images/Q4_1_after_flip.png" align="middle" width="400px" />
+                            <figcaption align="middle"> Fig 12: After Flip.</figcaption>
+                        </figure>
+
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <br />
+
+
+        <b>
+            Debugging journey:
+        </b>
+        <p>
+            <ol style="list-style-type: disc;">
+                <li>
+                    At first, we considered only the pointers on the flipped edge, and not the other 4 edges. Thus, our teapot had some “holes” after the edge flip. We later realized that we should consider all the involved edges instead of only the given “flipping edge”.
+                </li>
+                <li>
+                    Also, initially, we tried to think in our head what changed and what didn’t. And tried to identify/reassign only the elements which “we think” should be modified. However, later, we found that to be very inefficient, and later when we instead took all involved elements into consideration (identify and reassign all of the elements), we soon found this to be a much better way of solving this problem.
+                </li>
+            </ol>
+
+        </p>
+        <br />
+
+
+        <h3 align="middle">Part 5: Edge Split</h3>
+        <b>
+            The way we implemented the edge split:
+        </b>
+        <p>
+            Our implementation process for part 5 is somewhat similar to that of part 4:
+
+            <ol style="list-style-type: disc;">
+                <li>
+                    First, we labeled the graphs on paper to make sure we understand what needs to be added/modified.
+                </li>
+                <li>
+                    Second, we identified all the half edges, vertices, edges, and faces involved in the original graph.
+                </li>
+                <li>
+                    Third, we created the new elements involved in the split operation: one vertex m (also initializes the position of the vertex to be the midpoint of b, c, vertex of the target split edge), 2 new faces, 3 new edges, and 6 new half edges.
+                </li>
+                <li>
+                    Fourth, we reassigned all the halfedge pointers of vertices, faces, and edges. And we also reassigned all of the next, twin, vertex, edge, and face pointer of the half edges.
+                </li>
+                <li>
+                    Lastly, we rendered the teapot and tested the split operation on multiple different edges to make sure that our method works properly as expected.
+                </li>
+                <li>
+                    Building on previous experiences, the process turned out to be quite smooth. We didn’t rely on any special implementation/debugging tricks other than keeping the elements in order, and write clear documentations to make sure that the code is easy to read and understand.
+                </li>
+            </ol>
+        </p>
+        <b>
+            Screenshot of a mesh before and after edge splits:
+        </b>
+
+        <div align="middle">
+            <table style="width=100%">
+                <tr>
+                    <td>
+                        <figure>
+                            <img src="images/Q5_before_split.png" align="middle" width="400px" />
+                            <figcaption align="middle"> Fig 13: Before Split.</figcaption>
+                        </figure>
+                    </td>
+                    <td>
+                        <figure>
+                            <img src="images/Q5_after_split.png" align="middle" width="400px" />
+                            <figcaption align="middle"> Fig 14: After Split.</figcaption>
+                        </figure>
+
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+        <b>
+            Screenshot of a mesh before and after a mixture of edge flips and splits:
+        </b>
+
+        <div align="middle">
+            <table style="width=100%">
+                <tr>
+                    <td>
+                        <figure>
+                            <img src="images/Q5_before_sf.png" align="middle" width="400px" />
+                            <figcaption align="middle"> Fig 15: Before Split & Flip.</figcaption>
+                        </figure>
+                    </td>
+                    <td>
+                        <figure>
+                            <img src="images/Q5_after_sf.png" align="middle" width="400px" />
+                            <figcaption align="middle"> Fig 16: After Split & Flip.</figcaption>
+                        </figure>
+
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+
+        <b>
+            Screenshot of EC - Split of a boundary edge:
+        </b>
+
+        <div align="middle">
+            <table style="width=100%">
+                <tr>
+                    <td>
+                        <figure>
+                            <img src="images/Q5_EC_Before_Split.png" align="middle" width="400px" />
+                            <figcaption align="middle"> Fig 17: Boundary Edge Before Split (EC).</figcaption>
+                        </figure>
+                    </td>
+                    <td>
+                        <figure>
+                            <img src="images/Q5_EC_After_Split.png" align="middle" width="400px" />
+                            <figcaption align="middle"> Fig 18: Boundary Edge After Split (EC).</figcaption>
+                        </figure>
+
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+        <br />
 
 
         
@@ -509,8 +522,6 @@
 
 
     </div>
-
-    <h3 align="middle"> All Projects: <a href="https://akhilvemuri.github.io/cs184-proj-webpage/">https://akhilvemuri.github.io/cs184-proj-webpage/</a></h3>
 
 </body>
 </html>
